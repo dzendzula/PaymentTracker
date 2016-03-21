@@ -1,8 +1,9 @@
-package com.zhezhela.paymenttracker.persist;
+package com.zhezhela.paymenttracker.persist.viewer;
 
 import java.util.List;
 
 import com.zhezhela.paymenttracker.domain.PaymentRecord;
+import com.zhezhela.paymenttracker.persist.PaymentRepository;
 
 public class PaymentRepositoryViewerImpl implements PaymentRepositoryViewer{
 

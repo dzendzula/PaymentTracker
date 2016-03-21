@@ -52,9 +52,8 @@ public class PaymentRecord {
 
 	@Override
 	public String toString() {
-		return (currency!= null ? currency.toUpperCase() : "NaN") + " " + amount + (getUsdEquivalent()!=null?" (USD " + getUsdEquivalent()+ ")":"");
+		return "PaymentRecord [currency=" + currency + ", amount=" + amount
+				+ ", usdRate=" + usdRate + "]";
 	}
-	
-	
 
 }

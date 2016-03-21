@@ -1,9 +1,9 @@
-package com.zhezhela.paymenttracker.application.presentation;
+package com.zhezhela.paymenttracker.application.writer;
 
 import java.util.List;
 
 import com.zhezhela.paymenttracker.domain.PaymentRecord;
-import com.zhezhela.paymenttracker.persist.PaymentRepositoryViewer;
+import com.zhezhela.paymenttracker.persist.viewer.PaymentRepositoryViewer;
 
 /**
  * 
@@ -12,7 +12,7 @@ import com.zhezhela.paymenttracker.persist.PaymentRepositoryViewer;
  * @author dzendzula
  *
  */
-public class ConsolePaymentRecordWriter implements PaymentRecordWriter {
+class ConsolePaymentRecordWriter implements PaymentRecordWriter {
 
 	private PaymentRepositoryViewer repositoryObserver;
 
@@ -29,7 +29,8 @@ public class ConsolePaymentRecordWriter implements PaymentRecordWriter {
 
 		List<PaymentRecord> records = repositoryObserver.getAllPaymentRecords();
 		for (PaymentRecord paymentRecord : records) {
-			System.out.println(paymentRecord.toString());
+			String recordString = paymentRecord.getCurrency().toUpperCase() + " " + paymentRecord.getAmount() + (paymentRecord.getUsdEquivalent()!=null?" (USD " + paymentRecord.getUsdEquivalent()+ ")":"");
+			System.out.println(recordString);
 		}
 
 	}

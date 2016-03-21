@@ -1,4 +1,4 @@
-package com.zhezhela.paymenttracker.persist;
+package com.zhezhela.paymenttracker.persist.viewer;
 
 import java.util.List;
 

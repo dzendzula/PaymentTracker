@@ -6,12 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.zhezhela.paymenttracker.application.presentation.ConsolePaymentRecordWriter;
-import com.zhezhela.paymenttracker.application.presentation.PaymentRecordWriter;
+import com.zhezhela.paymenttracker.application.writer.PaymentRecordWriter;
+import com.zhezhela.paymenttracker.application.writer.WriterFactory;
 import com.zhezhela.paymenttracker.persist.PaymentRepository;
 import com.zhezhela.paymenttracker.persist.PaymentRepositoryTableImpl;
-import com.zhezhela.paymenttracker.persist.PaymentRepositoryViewerImpl;
 import com.zhezhela.paymenttracker.persist.loader.RecordParser;
+import com.zhezhela.paymenttracker.persist.viewer.PaymentRepositoryViewerImpl;
 
 public class App {
 
@@ -32,7 +32,7 @@ public class App {
 	}
 
 	private static void initWriter() {
-		PaymentRecordWriter writer = new ConsolePaymentRecordWriter(new PaymentRepositoryViewerImpl(repository));
+		PaymentRecordWriter writer = WriterFactory.getWriter(WriterFactory.CONSOLE_TYPE, new PaymentRepositoryViewerImpl(repository));
 		writerThread = new Thread(writer);
 		writerThread.start();
 	}
@@ -44,6 +44,7 @@ public class App {
 			
 			RecordParser parser = new RecordParser(repository);
 			String line  = consoleBufferReader.readLine();
+			
 			if(line.equalsIgnoreCase(QUIT)){
 				return;
 			}
@@ -68,14 +69,13 @@ public class App {
 	
 	private static void loadAndParseFile(String fileName, RecordParser parser){
 		if(fileName == null || fileName.length()==0){
+			// no file path provided by user
 			fileName = DEFAULT_FILE;
 		}
 		try(FileReader reader = new FileReader(fileName)){
 			parser.parseAndStore(reader);
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found error.");
-		} catch (IOException e1) {
-			System.err.println("File not found error.");
+		} catch (IOException e) {
+			System.err.println("File reading error.");
 		}
 	
 	}
